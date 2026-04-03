@@ -16,7 +16,38 @@
 try { require('dotenv').config(); } catch {}
 
 const EmailTemplateGenerator = require('./generate-email.js');
-const fs = require('fs');
+const fs   = require('fs');
+const path = require('path');
+
+// ─── INLINE IMAGES AS BASE64 ─────────────────────────────────────────────────
+// Los clientes de correo no pueden acceder a rutas relativas locales.
+// Esta función reemplaza src="archivo.ext" por src="data:mime/type;base64,..."
+const MIME_TYPES = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.webp': 'image/webp',
+};
+
+function inlineImages(html, templateDir) {
+  return html.replace(/src="([^"]+)"/g, (match, src) => {
+    // Ignorar URLs absolutas y data URIs que ya estén inlineadas
+    if (src.startsWith('http') || src.startsWith('data:')) return match;
+
+    const filePath = path.resolve(templateDir, src);
+    if (!fs.existsSync(filePath)) {
+      console.warn(`⚠️  Imagen no encontrada, se omite: ${filePath}`);
+      return match;
+    }
+
+    const ext  = path.extname(filePath).toLowerCase();
+    const mime = MIME_TYPES[ext] || 'application/octet-stream';
+    const b64  = fs.readFileSync(filePath).toString('base64');
+    return `src="data:${mime};base64,${b64}"`;
+  });
+}
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 const API_TOKEN  = process.env.MAILERSEND_API_TOKEN;
@@ -71,7 +102,9 @@ async function main() {
   for (const lead of recipients) {
     try {
       const completeLead = generator.createCompleteLead(lead);
-      const html = generator.generateClean(completeLead);
+      const rawHtml = generator.generateClean(completeLead);
+      const templateDir = path.dirname(path.resolve(generator.templatePath));
+      const html = inlineImages(rawHtml, templateDir);
 
       const result = await sendEmail({
         toEmail: completeLead.customer_email,
