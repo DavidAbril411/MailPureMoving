@@ -6,354 +6,327 @@
   <title>Pure Moving - Move Confirmation</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #222;
-      font-size: 14px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f7f9fa;
+      color: #0C0A0A;
+      font-size: 15px;
       line-height: 1.6;
     }
-
     .wrapper {
       max-width: 680px;
-      margin: 30px auto;
-      background: #fff;
-      border-radius: 8px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     }
 
     /* ── HEADER ── */
     .header {
-      background: #00e24b;
-      padding: 32px 40px 28px;
+      background: #0C0A0A;
+      padding: 15px 40px 25px;
       text-align: center;
+      border-bottom: 4px solid #00E24B;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-
+    .header-section {
+      display: flex;
+      align-items: center;
+    }
     .header img.logo {
-      max-width: 220px;
-      height: auto;
+      height: 64px;
       display: block;
-      margin: 0 auto 18px;
-      background: #fff;
-      border-radius: 6px;
-      padding: 10px 16px;
+      margin-left: 35px;
+      padding: 12px 24px;
+      border-radius: 8px;
     }
-
     .header-tag {
       display: inline-block;
-      background: rgba(255,255,255,0.25);
-      color: #fff;
+      color: #00E24B;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 5px 14px;
+      padding: 7px 16px;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.5);
+      border: 1px solid rgba(0, 226, 75, 0.4);
+      margin-top: 10px;
+    }
+    .hero-img {
+      width: 50%;
+      display: block;
+      margin-top: 20px;
+      align-self: flex-start;
+      transform: translateX(-120px);
     }
 
     /* ── BODY ── */
-    .body {
-      padding: 36px 40px;
-    }
-
-    .greeting {
-      margin-bottom: 22px;
-    }
-
-    .greeting h2 {
-      font-size: 20px;
-      color: #222;
-      margin-bottom: 6px;
-    }
-
-    .greeting p {
-      color: #555;
-      font-size: 14px;
-    }
+    .body { padding: 40px; }
+    .greeting { margin-bottom: 28px; }
+    .greeting h2 { font-size: 24px; color: #0C0A0A; margin-bottom: 8px; font-weight: 800; }
+    .greeting p { color: #4a4a4a; font-size: 16px; }
 
     /* ── ALERT ── */
     .alert {
-      background: #fffbea;
-      border: 1px solid #f0c040;
-      border-left: 4px solid #f0a800;
-      border-radius: 6px;
-      padding: 18px 20px;
-      margin: 22px 0;
+      background: #fafafa;
+      border: 1px solid #eaeaea;
+      border-left: 4px solid #00E24B;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-
     .alert-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #c08000;
+      color: #0C0A0A;
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
     }
-
-    .alert ul {
-      list-style: none;
-      padding: 0;
-    }
-
+    .alert-title::before { content: "⚠️"; margin-right: 8px; font-size: 16px; }
+    .alert ul { list-style: none; padding: 0; }
     .alert li {
-      font-size: 13px;
-      color: #555;
-      padding: 6px 0 6px 22px;
+      font-size: 14px;
+      color: #4a4a4a;
+      padding: 10px 0 10px 24px;
       position: relative;
-      border-bottom: 1px dashed #f0e090;
+      border-bottom: 1px dashed #eaeaea;
     }
-
-    .alert li:last-child { border-bottom: none; }
-
-    .alert li::before {
-      content: "!";
+    .alert li:last-child { border-bottom: none; padding-bottom: 0; }
+    .alert li:first-child { padding-top: 0; }
+    .alert li:before {
+      content: "";
       position: absolute;
       left: 0;
-      top: 7px;
-      background: #f0a800;
-      color: #fff;
-      width: 14px;
-      height: 14px;
+      top: 16px;
+      background: #00E24B;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      font-size: 10px;
-      font-weight: 900;
-      text-align: center;
-      line-height: 14px;
     }
+    .alert li:first-child::before { top: 6px; }
 
     /* ── PAYMENT BOX ── */
     .payment-box {
-      background: #f6fbee;
-      border: 1px solid #c8e89a;
-      border-left: 4px solid #8DC63F;
-      border-radius: 6px;
-      padding: 16px 20px;
-      margin: 18px 0;
-      font-size: 13px;
-      color: #444;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      border-left: 4px solid #0C0A0A;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 24px 0;
+      color: #0C0A0A;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-
     .payment-box .ptitle {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #5a9010;
-      margin-bottom: 10px;
+      color: #0C0A0A;
+      margin-bottom: 14px;
     }
-
-    .payment-box p { margin: 4px 0; }
-    .payment-box .yes { color: #3a8000; font-weight: 600; }
-    .payment-box .no  { color: #c0392b; font-weight: 600; }
+    .payment-box p { margin: 6px 0 16px 0; font-size: 14px; color: #4a4a4a; }
+    .payment-box .yes { color: #0C0A0A; font-weight: 700; margin-bottom: 10px; position: relative; padding-left: 24px; }
+    .payment-box .yes::before { content: "✓"; color: #00E24B; position: absolute; left: 0; top: 0; font-weight: 900; font-size: 16px; }
+    .payment-box .no  { color: #666; font-weight: 500; margin-top: 16px; position: relative; padding-left: 24px; font-size: 14px; }
+    .payment-box .no::before { content: "✕"; color: #999; position: absolute; left: 0; top: 0; font-weight: 900; font-size: 16px; }
 
     /* ── DIVIDER ── */
-    .divider {
-      border: none;
-      border-top: 2px solid #f0f0f0;
-      margin: 28px 0;
+    .divider { border: none; border-top: 2px dashed #eaeaea; margin: 36px 0; }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0C0A0A;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .section-label span {
+      background: #00E24B;
+      color: #0C0A0A;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-right: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 900;
     }
 
     /* ── ORDER CARD ── */
-    .section-label {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #8DC63F;
-      margin-bottom: 14px;
-    }
-
     .order-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid #e5e5e5;
+      background: #fafafa;
+      border: 1px solid #eaeaea;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 30px;
     }
-
     .order-cell {
-      padding: 14px 18px;
-      border-right: 1px solid #e5e5e5;
-      border-bottom: 1px solid #e5e5e5;
+      padding: 16px 20px;
+      border-right: 1px solid #eaeaea;
+      border-bottom: 1px solid #eaeaea;
     }
-
     .order-cell:nth-child(even)  { border-right: none; }
     .order-cell:nth-last-child(-n+2) { border-bottom: none; }
     .order-cell.full { grid-column: 1 / -1; border-right: none; }
-
     .cell-label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 4px;
+      color: #888;
+      margin-bottom: 6px;
     }
-
-    .cell-value {
-      font-size: 15px;
-      font-weight: 600;
-      color: #222;
-    }
-
-    .cell-value a { color: #8DC63F; text-decoration: none; }
-    .cell-value a:hover { text-decoration: underline; }
+    .cell-value { font-size: 16px; font-weight: 700; color: #0C0A0A; }
+    .cell-value a { color: #00E24B; text-decoration: none; }
 
     /* ── LOCATIONS TABLE ── */
-    .locations-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-bottom: 8px;
+    .locations-wrapper {
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
     }
-
-    .locations-table thead tr {
-      background: #8DC63F;
-      color: #fff;
-    }
-
-    .locations-table th {
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .locations-table td {
-      padding: 12px 14px;
-      border-bottom: 1px solid #eee;
-      color: #444;
-    }
-
-    .locations-table tbody tr:last-child td { border-bottom: none; }
+    .locations-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .locations-table thead tr { background: #0C0A0A; color: #ffffff; }
+    .locations-table th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .locations-table td { padding: 16px; border-bottom: 1px solid #eaeaea; color: #4a4a4a; }
     .locations-table tbody tr:nth-child(odd) { background: #fafafa; }
-
     .location-badge {
       display: inline-block;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-
-    .badge-pickup   { background: #e8f5e9; color: #2e7d32; }
-    .badge-delivery { background: #e3f2fd; color: #1565c0; }
+    .badge-pickup   { background: #e0f9e8; color: #00E24B; border: 1px solid #00E24B; }
+    .badge-delivery { background: #eaeaea; color: #0C0A0A; border: 1px solid #ccc; }
+    .distance-badge {
+      display: inline-block;
+      background: #0C0A0A;
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .distance-badge strong { color: #00E24B; }
 
     /* ── RATE BOX ── */
     .rate-box {
       background: #fafafa;
-      border: 1px solid #e5e5e5;
+      border: 1px solid #00E24B;
       border-radius: 8px;
-      padding: 18px 20px;
-      margin: 20px 0;
+      padding: 24px;
+      margin: 0 0 24px 0;
+      position: relative;
     }
-
-    .rate-box .cash-note {
-      background: #8DC63F;
-      color: #fff;
-      display: inline-block;
-      padding: 4px 12px;
+    .cash-note {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: #00E24B;
+      color: #0C0A0A;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 10px rgba(0,226,75,0.3);
     }
 
     /* ── NOTES BOX ── */
     .notes-box {
       background: #fafafa;
       border: 1px dashed #ccc;
-      border-radius: 6px;
-      padding: 16px 20px;
-      font-size: 13px;
-      color: #666;
-      min-height: 48px;
-      margin-bottom: 24px;
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-size: 14px;
+      color: #4a4a4a;
+      min-height: 60px;
+      margin-bottom: 30px;
+      font-style: italic;
     }
 
     /* ── POLICIES ── */
     .policies {
-      border-top: 2px solid #f0f0f0;
-      padding-top: 26px;
-      margin-top: 10px;
+      background: #0C0A0A;
+      color: #ffffff;
+      padding: 40px;
+      margin: 40px -40px -40px -40px;
     }
-
-    .policy-item {
-      margin-bottom: 20px;
-    }
-
+    .policies .section-label { color: #ffffff; }
+    .policy-item { margin-bottom: 28px; border-bottom: 1px solid #222; padding-bottom: 24px; }
+    .policy-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .policy-item h4 {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: #333;
-      margin-bottom: 6px;
+      color: #00E24B;
+      margin-bottom: 8px;
     }
-
-    .policy-item p {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.75;
-    }
-
-    .policy-item p a { color: #8DC63F; }
+    .policy-item p { font-size: 13px; color: #d0d0d0; line-height: 1.8; margin-top: 8px; }
+    .policy-item p a { color: #00E24B; text-decoration: none; border-bottom: 1px solid #00E24B; }
 
     /* ── CTA BUTTON ── */
-    .cta-wrap {
-      text-align: center;
-      margin: 28px 0;
-    }
-
+    .cta-wrap { text-align: center; margin: 40px 0; }
     .cta-btn {
       display: inline-block;
-      background: #8DC63F;
-      color: #fff;
+      background: #00E24B;
+      color: #0C0A0A;
       text-decoration: none;
-      padding: 14px 36px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 0.5px;
+      padding: 18px 48px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 20px rgba(0,226,75,0.3);
+      transition: transform 0.2s ease;
     }
 
     /* ── FOOTER ── */
     .footer {
-      background: #2c3e50;
-      color: #ccc;
-      padding: 28px 40px;
-      font-size: 13px;
-    }
-
-    .footer-top {
+      background: #ffffff;
+      padding: 30px 40px;
       text-align: center;
-      padding-bottom: 18px;
-      border-bottom: 1px solid #3d5166;
-      margin-bottom: 18px;
+      border-top: 1px solid #eaeaea;
     }
-
-    .footer-top p { margin: 4px 0; color: #aaa; }
-    .footer-top a { color: #8DC63F; text-decoration: none; font-weight: 600; }
-
-    .sig-name  { font-size: 15px; font-weight: 700; color: #fff; }
-    .sig-title { font-size: 12px; color: #999; margin-top: 2px; }
-    .sig-logo  { max-width: 140px; height: auto; margin-top: 14px; background: #fff; border-radius: 4px; padding: 6px 10px; }
+    .rep-name { font-size: 18px; font-weight: 800; color: #0C0A0A; }
+    .rep-title { font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    .rep-phone { margin-top: 10px; font-size: 15px; font-weight: 700; color: #00E24B; }
+    .rep-phone a { color: #00E24B; text-decoration: none; }
+    .footer-bottom { font-size: 12px; color: #aaa; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #eaeaea; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 560px) {
-      .body { padding: 24px 20px; }
+    @media (max-width: 600px) {
+      .body { padding: 24px; }
+      .header { padding: 30px 24px 20px; }
+      .policies { padding: 30px 24px; margin: 30px -24px -24px -24px; }
       .order-grid { grid-template-columns: 1fr; }
-      .order-cell { border-right: none; }
-      .order-cell.full { grid-column: 1; }
-      .order-cell:nth-last-child(-n+2) { border-bottom: 1px solid #e5e5e5; }
-      .order-cell:last-child { border-bottom: none; }
+      .order-cell { border-right: none; border-bottom: 1px solid #eaeaea !important; }
+      .order-cell.full, .order-cell:last-child { border-bottom: none !important; }
+      .locations-table thead { display: none; }
+      .locations-table tbody tr { border-bottom: 2px solid #eaeaea; display: block; padding-bottom: 10px; }
+      .locations-table td { display: block; text-align: right; padding: 8px 16px; border-bottom: 1px solid #fafafa; }
+      .locations-table td::before { content: attr(data-label); float: left; font-weight: 800; text-transform: uppercase; font-size: 11px; color: #888; }
     }
   </style>
 </head>
@@ -362,12 +335,16 @@
 
   <!-- ══ HEADER ══ -->
   <div class="header">
-    <img
-      src="https://pure-moving.s3.us-west-1.amazonaws.com/images/pure.jpeg"
-      alt="Pure Moving – Licensed | Insured"
-      class="logo">
+    <div class="header-section">
+        <!-- HERO IMAGE -->
+        <img src="track.png" alt="Pure Moving Truck" class="hero-img">
+
+        <img src="a.svg" alt="Pure Moving - Licensed | Insured" class="logo">
+    </div>
     <span class="header-tag">Move Confirmation</span>
   </div>
+  
+  
 
   <!-- ══ BODY ══ -->
   <div class="body">
@@ -375,298 +352,165 @@
     <!-- Greeting -->
     <div class="greeting">
       <h2>Dear <span data-editable="customer_name">Humberto A.</span>,</h2>
-      <p>
-        Thank you very much for choosing Pure Moving,
-        <strong>you are officially on our schedule!</strong>
-      </p>
+      <p>Thank you very much for choosing Pure Moving, <strong style="color:#0C0A0A;">you are officially on our schedule!</strong></p>
     </div>
 
     <!-- Read alert -->
     <div class="alert">
-      <div class="alert-title">📋 Please Read This Email</div>
-      <p style="font-size:13px; color:#666; margin-bottom:12px;">
-        It contains important information about your move.
-      </p>
+      <div class="alert-title">Please Read This Email</div>
+      <p style="font-size:13.5px; color:#666; margin-bottom:16px;">It contains important information about your upcoming move.</p>
       <ul>
-        <li>
-          <em>Kindly note</em> that if a move has already been confirmed and is subsequently
-          canceled or rescheduled <strong>on the day of the move</strong>, a
-          <strong>$150 cancellation/rescheduling fee</strong> will apply.
-          This fee directly covers the movers' salaries, as our team is fully prepared
-          and scheduled to assist you. Thank you for your understanding.
-        </li>
-        <li>
-          <em>We have a <strong>4 HOUR MINIMUM REQUIREMENT</strong></em>.
-          If your move is completed in less than 4 hours, you will be charged for 4 hours.
-          If your move takes more than 4 hours, you'll be charged for the actual time it
-          takes to complete your move.
-        </li>
+        <li><em>Kindly note</em> that if a move has already been confirmed and is subsequently canceled or rescheduled <strong>on the day of the move</strong>, a <strong style="color:#00E24B;">$150 cancellation/rescheduling fee</strong> will apply. This fee directly covers the movers' salaries, as our team is fully prepared and scheduled to assist you. Thank you for your understanding.</li>
+        <li><em>We have a <strong style="color:#00E24B;">4 HOUR MINIMUM REQUIREMENT</strong></em>. If your move is completed in less than 4 hours, you will be charged for 4 hours. If your move takes more than 4 hours, you'll be charged for the actual time it takes to complete your move.</li>
       </ul>
     </div>
 
     <!-- Payment methods -->
     <div class="payment-box">
-      <div class="ptitle">Also please keep in mind</div>
+      <div class="ptitle">Accepted Payment Methods</div>
       <p>We <strong>only accept payment by:</strong></p>
-      <p class="yes">✓ Credit or Debit Card</p>
-      <p class="yes">✓ Cash &nbsp;—&nbsp; <em>7% Discount For All Cash Payments!</em></p>
-      <p class="no" style="margin-top:8px;">
-        ❌ We do <u>not</u> accept Zelle, Venmo, checks, or any other alternative payment methods.
-      </p>
+      <div class="yes">Credit or Debit Card</div>
+      <div class="yes">Cash &nbsp;<span style="color:#00E24B; font-size:12px; margin-left:6px; font-weight:800; letter-spacing:0.5px;">(7% DISCOUNT FOR CASH)</span></div>
+      <div class="no">We do <u>not</u> accept Zelle, Venmo, checks, or any other alternative payment methods.</div>
     </div>
 
     <hr class="divider">
 
     <!-- ── ORDER DETAILS ── -->
-    <div class="section-label">📋 Order Details</div>
-
+    <div class="section-label"><span>01</span> Order Details</div>
     <div class="order-grid">
-      <div class="order-cell">
-        <div class="cell-label">Order #</div>
-        <div class="cell-value" data-editable="order_number">MG 315645</div>
-      </div>
-      <div class="order-cell">
-        <div class="cell-label">Name</div>
-        <div class="cell-value" data-editable="customer_name">Humberto A.</div>
-      </div>
-      <div class="order-cell">
-        <div class="cell-label">E-mail</div>
-        <div class="cell-value" data-editable="customer_email">&nbsp;</div>
-      </div>
-      <div class="order-cell">
-        <div class="cell-label">Phone Number</div>
-        <div class="cell-value">
-          <a href="tel:3333333333" data-editable="customer_phone">(333) 333-3333</a>
-        </div>
-      </div>
-      <div class="order-cell">
-        <div class="cell-label">Move Date</div>
-        <div class="cell-value" data-editable="move_date">—</div>
-      </div>
-      <div class="order-cell">
-        <div class="cell-label">Arrival Window</div>
-        <div class="cell-value" data-editable="arrival_window">not set</div>
-      </div>
-      <div class="order-cell full">
-        <div class="cell-label">Move Size</div>
-        <div class="cell-value" data-editable="move_size">1Br &nbsp; 0 SqFt</div>
-      </div>
+      <div class="order-cell"><div class="cell-label">Order #</div><div class="cell-value" data-editable="order_number">MG 315645</div></div>
+      <div class="order-cell"><div class="cell-label">Name</div><div class="cell-value" data-editable="customer_name">Humberto A.</div></div>
+      <div class="order-cell"><div class="cell-label">E-mail</div><div class="cell-value" data-editable="customer_email">&nbsp;</div></div>
+      <div class="order-cell"><div class="cell-label">Phone Number</div><div class="cell-value"><a href="#" data-editable="customer_phone">(333) 333-3333</a></div></div>
+      <div class="order-cell"><div class="cell-label">Move Date</div><div class="cell-value" data-editable="move_date">—</div></div>
+      <div class="order-cell"><div class="cell-label">Arrival Window</div><div class="cell-value" data-editable="arrival_window">not set</div></div>
+      <div class="order-cell full"><div class="cell-label">Move Size</div><div class="cell-value" data-editable="move_size">1Br &nbsp; 0 SqFt</div></div>
     </div>
 
     <!-- ── LOCATIONS ── -->
-    <div class="section-label">📍 Locations</div>
-
-    <table class="locations-table">
-      <thead>
-        <tr>
-          <th>Location #</th>
-          <th>Type</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Zip</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td><span class="location-badge badge-pickup">pick-up</span></td>
-          <td data-editable="pickup_address">&nbsp;</td>
-          <td data-editable="pickup_city">Irwindale</td>
-          <td data-editable="pickup_state">California</td>
-          <td data-editable="pickup_zip">91702</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td><span class="location-badge badge-delivery">delivery</span></td>
-          <td data-editable="delivery_address">&nbsp;</td>
-          <td data-editable="delivery_city">Irwindale</td>
-          <td data-editable="delivery_state">California</td>
-          <td data-editable="delivery_zip">91702</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p style="font-size:13px; color:#888; margin: 10px 0 22px;">
-      Total Distance: <strong data-editable="total_distance">0 miles</strong>
-    </p>
+    <div class="section-label"><span>02</span> Locations</div>
+    <div class="locations-wrapper">
+      <table class="locations-table">
+        <thead><tr><th>Type</th><th>Address</th><th>City</th><th>State</th><th>Zip</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="Type"><span class="location-badge badge-pickup">1. Pick-up</span></td>
+            <td data-label="Address" data-editable="pickup_address">&nbsp;</td>
+            <td data-label="City" data-editable="pickup_city">Irwindale</td>
+            <td data-label="State" data-editable="pickup_state">California</td>
+            <td data-label="Zip" data-editable="pickup_zip">91702</td>
+          </tr>
+          <tr>
+            <td data-label="Type"><span class="location-badge badge-delivery">2. Delivery</span></td>
+            <td data-label="Address" data-editable="delivery_address">&nbsp;</td>
+            <td data-label="City" data-editable="delivery_city">Irwindale</td>
+            <td data-label="State" data-editable="delivery_state">California</td>
+            <td data-label="Zip" data-editable="delivery_zip">91702</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="distance-badge">Total Distance: <strong data-editable="total_distance">0 miles</strong></div>
 
     <!-- ── RATE INFO ── -->
-    <div class="section-label">💰 Rate Info</div>
+    <div class="section-label"><span>03</span> Rate Info</div>
     <div class="rate-box">
-      <p style="font-size:13px; color:#666;" data-editable="rate_info">
-        &nbsp;
-      </p>
-      <div>
-        <span class="cash-note">7% Discount For All Cash Payments!</span>
-      </div>
+      <div class="cash-note">Save 7% With Cash!</div>
+      <div style="font-size:15px; color:#0C0A0A; font-weight:600;" data-editable="rate_info">&nbsp;</div>
     </div>
 
     <!-- ── ADDITIONAL NOTES ── -->
-    <div class="section-label">📝 Additional Notes</div>
+    <div class="section-label"><span>04</span> Additional Notes</div>
     <div class="notes-box" data-editable="additional_notes">&nbsp;</div>
-
-    <hr class="divider">
-
-    <!-- ══ POLICIES & GUIDELINES ══ -->
-    <div class="policies">
-      <div class="section-label">📋 Policies &amp; Guidelines</div>
-
-      <div class="policy-item">
-        <h4>Weight Limits</h4>
-        <p>Please be advised that the weight of your items must not exceed <strong>8,000 lbs per truck</strong>
-        due to DOT &amp; FMCSA regulations. THE DEPARTMENT OF TRANSPORTATION WILL NOT ALLOW US TO MOVE YOUR ITEMS
-        IF THEY WEIGH MORE THAN 8,000 LBS. Since it is virtually impossible for anyone to accurately guess the
-        weight of your stuff in advance, we will use weight sensors on the day of the move to make sure we can
-        safely get on the road. In the incredibly rare event that the items weigh more than 8,000 LBS, we
-        guarantee that we will not take advantage of you by charging crazy storage rates or excessive fees of
-        any kind. However, please be advised that you may incur our cost to deliver the rest of your items in
-        another truck at a later date. We guarantee that you will only be asked to pay our cost in this scenario
-        as we have no desire whatsoever to extract profits from unexpected &amp; rare situations such as these.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Double Drive Time Explained</h4>
-        <p>In the state of California, all licensed &amp; insured moving companies double the time that the truck
-        spends driving between your pick-up &amp; drop-off locations.
-        <u>This is not a charge that we created,</u> it is a regulation set in place by the state of California.
-        So, for example, if it takes us 30 minutes to drive from your pick-up location to your drop-off location,
-        you will be charged for <strong>1 hour of driving</strong> on your final invoice and that's it.
-        This is why we do not charge you for the time it will take our truck &amp; movers to drive from our parking
-        lot to your pick-up location OR for the time it will take them to drive back to our parking lot from your
-        drop-off location.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>We Have a 4 Hour Minimum Requirement</h4>
-        <p>If your move is completed in less than 4 hours you will be charged for 4 hours.
-        If your move takes more than 4 hours, you'll be charged for the actual time it takes to complete your move.
-        You will be billed in <strong>15-minute increments</strong> after the 4 hour minimum is reached.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Length of the Move</h4>
-        <p>We are unable to determine the duration or final cost of any move in advance due to multiple variables
-        that are unique to every move. Someone (either you or someone you have designated) should be present with
-        our movers for the duration of your move. Please let us know in advance if you have an extenuating
-        circumstance and will not be able to be there.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Payment</h4>
-        <p>We accept ALL major credit/debit cards or cash, but we do not accept checks of ANY kind.
-        You will receive a receipt at the end of your move regardless of your form of payment.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Parking</h4>
-        <p>Customers are fully responsible for parking or truck violations during the move time.
-        If you do not have a driveway for us to pull into, please secure legal street parking for your truck on
-        move day. Please make yourself aware of any weight limit or truck restrictions on your street.
-        You may need a permit for the truck. If you feel that your street may have truck restrictions it is best
-        to: <strong>GOOGLE your ZIP CODE + MOVING TRUCK PERMIT</strong></p>
-      </div>
-
-      <div class="policy-item">
-        <h4>TVs &amp; Computer Monitors</h4>
-        <p>Televisions &amp; computer monitors will be turned on &amp; tested before and after the move for
-        service quality assurance. Please keep the power cables <strong>UNPACKED</strong> until the movers have
-        a chance to complete the test.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Appliances &amp; Dressers</h4>
-        <p>We require any appliance or piece of furniture we move be completely empty to avoid any internal damage
-        or leakage. We do not offer a waiver for this policy because we have seen too many unexpected incidents
-        that could have been avoided by completely emptying the piece. Even clothes inside of the drawers in a
-        dresser can potentially lead to internal damage to your furniture. Please be advised that we are unable
-        to reconnect any appliance's water or gas lines for multiple liability reasons.</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Pianos, Safes, &amp; Large/Heavy Items</h4>
-        <p>If you have a PIANO, LARGE SAFE, LARGE MARBLE TABLE, or any other items that could be considered
-        excessively heavy (300 lbs or more), please notify us immediately as we will need to send a specialized
-        crew, truck with a lift gate, &amp; item specific tools.
-        <strong>We will not move items over 300 lbs without at least 48 hours notice.</strong></p>
-      </div>
-
-      <div class="policy-item">
-        <h4>We Cannot Move</h4>
-        <p>GRAND OR BABY GRAND PIANOS — POOL TABLES — INDOOR HOT TUBS/SAUNAS — MURPHY BED</p>
-      </div>
-
-      <div class="policy-item">
-        <h4>What If I Need to Cancel My Move?</h4>
-        <p>We totally understand that things pop up &amp; plans change so we have a no-hassle cancellation policy.
-        However, if you need to cancel or change your date you need to call us or reply to this email asap to let
-        us know. We will do our absolute best to reschedule you for your date of choice based on availability.
-        Please keep in mind that the date you request to switch to might be a different rate.
-        <strong>Please give us a minimum of 48 hours if you need to change or cancel your move date.</strong></p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Insurance</h4>
-        <p><u>We include basic insurance</u> with all of our orders in accordance with the California Public
-        Utility Commission's standard of <strong>$0.60 per pound</strong> for lost or damaged goods.
-        You may also opt to use your homeowners or renters insurance to cover your items while we are moving them.
-        For additional insurance or a full coverage policy we recommend a third party insurance company.
-        The link below is an example of one that we have had positive experiences with:
-        <a href="http://www.movinginsurance.com/index.asp?Aff=12838" target="_blank">
-          http://www.MovingInsurance.com/index.asp?Aff=12838
-        </a></p>
-      </div>
-
-      <div class="policy-item">
-        <h4>Public Utilities Commission</h4>
-        <p>Please review this <a href="http://www.cpuc.ca.gov/transportation" target="_blank">LINK</a>
-        to familiarize yourself with the regulations of the California Public Utilities Commission that pertain
-        to moving:<br>
-        <a href="http://www.cpuc.ca.gov/transportation" target="_blank">
-          http://www.cpuc.ca.gov/transportation
-        </a></p>
-      </div>
-
-      <div class="policy-item">
-        <h4>After the Move Is Done</h4>
-        <p>If you have any questions, comments, or feedback DURING OR AFTER the move please do not hesitate to
-        give us a call at <a href="tel:8008165121">800-816-5121</a> or just reply to this email.</p>
-      </div>
-    </div>
 
     <!-- ── CTA ── -->
     <div class="cta-wrap">
-      <a href="tel:8008165121" class="cta-btn">📞 Call Us: 800-816-5121</a>
+      <p style="font-size:16px; font-weight:800; color:#0C0A0A; margin-bottom:16px;">Ready for your move?</p>
+      <a href="tel:8008165121" class="cta-btn">📞 CALL US: 800-816-5121</a>
     </div>
 
-    <p style="text-align:center; font-size:14px; color:#555; margin-bottom:6px;">
-      <strong>Thank you for choosing Pure Moving!</strong>
-    </p>
-    <p style="text-align:center; font-size:13px; color:#888;">
-      Have a great move and feel free to call us if you need anything whatsoever
-      <a href="tel:8008165121" style="color:#8DC63F; font-weight:600;">800-816-5121</a>.
-    </p>
+    <!-- ══ POLICIES & GUIDELINES ══ -->
+    <div class="policies">
+      <div class="section-label" style="color:white; margin-bottom:30px;"><span style="font-size:16px; background:none; padding:0;">📋</span> Policies &amp; Guidelines</div>
+      <div class="policy-item">
+        <h4>Weight Limits</h4>
+        <p>Please be advised that the weight of your items must not exceed <strong style="color:#00E24B;">8,000 lbs per truck</strong> due to DOT &amp; FMCSA regulations. THE DEPARTMENT OF TRANSPORTATION WILL NOT ALLOW US TO MOVE YOUR ITEMS IF THEY WEIGH MORE THAN 8,000 LBS. Since it is virtually impossible for anyone to accurately guess the weight of your stuff in advance, we will use weight sensors on the day of the move to make sure we can safely get on the road. In the incredibly rare event that the items weigh more than 8,000 LBS, we guarantee that we will not take advantage of you by charging crazy storage rates or excessive fees of any kind. However, please be advised that you may incur our cost to deliver the rest of your items in another truck at a later date. We guarantee that you will only be asked to pay our cost in this scenario as we have no desire whatsoever to extract profits from unexpected &amp; rare situations such as these.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Double Drive Time Explained</h4>
+        <p>In the state of California, all licensed &amp; insured moving companies double the time that the truck spends driving between your pick-up &amp; drop-off locations. <u style="text-decoration-color:#00E24B;">This is not a charge that we created,</u> it is a regulation set in place by the state of California. So, for example, if it takes us 30 minutes to drive from your pick-up location to your drop-off location, you will be charged for <strong style="color:#00E24B;">1 hour of driving</strong> on your final invoice and that's it. This is why we do not charge you for the time it will take our truck &amp; movers to drive from our parking lot to your pick-up location OR for the time it will take them to drive back to our parking lot from your drop-off location.</p>
+      </div>
+      <div class="policy-item">
+        <h4>We Have a 4 Hour Minimum Requirement</h4>
+        <p>If your move is completed in less than 4 hours you will be charged for 4 hours. If your move takes more than 4 hours, you'll be charged for the actual time it takes to complete your move. You will be billed in <strong style="color:#00E24B;">15-minute increments</strong> after the 4 hour minimum is reached.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Length of the Move</h4>
+        <p>We are unable to determine the duration or final cost of any move in advance due to multiple variables that are unique to every move. Someone (either you or someone you have designated) should be present with our movers for the duration of your move. Please let us know in advance if you have an extenuating circumstance and will not be able to be there.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Payment</h4>
+        <p>We accept ALL major credit/debit cards or cash, but we do not accept checks of ANY kind. You will receive a receipt at the end of your move regardless of your form of payment.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Parking</h4>
+        <p>Customers are fully responsible for parking or truck violations during the move time. If you do not have a driveway for us to pull into, please secure legal street parking for your truck on move day. Please make yourself aware of any weight limit or truck restrictions on your street. You may need a permit for the truck. If you feel that your street may have truck restrictions it is best to: <strong style="color:#00E24B;">GOOGLE your ZIP CODE + MOVING TRUCK PERMIT</strong></p>
+      </div>
+      <div class="policy-item">
+        <h4>TVs &amp; Computer Monitors</h4>
+        <p>Televisions &amp; computer monitors will be turned on &amp; tested before and after the move for service quality assurance. Please keep the power cables <strong style="color:#00E24B;">UNPACKED</strong> until the movers have a chance to complete the test.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Appliances &amp; Dressers</h4>
+        <p>We require any appliance or piece of furniture we move be completely empty to avoid any internal damage or leakage. We do not offer a waiver for this policy because we have seen too many unexpected incidents that could have been avoided by completely emptying the piece. Even clothes inside of the drawers in a dresser can potentially lead to internal damage to your furniture. Please be advised that we are unable to reconnect any appliance's water or gas lines for multiple liability reasons.</p>
+      </div>
+      <div class="policy-item">
+        <h4>Pianos, Safes, &amp; Large/Heavy Items</h4>
+        <p>If you have a PIANO, LARGE SAFE, LARGE MARBLE TABLE, or any other items that could be considered excessively heavy (300 lbs or more), please notify us immediately as we will need to send a specialized crew, truck with a lift gate, &amp; item specific tools. <strong style="color:#00E24B;">We will not move items over 300 lbs without at least 48 hours notice.</strong></p>
+      </div>
+      <div class="policy-item">
+        <h4>We Cannot Move</h4>
+        <p style="color:#00E24B; font-weight:800;">GRAND OR BABY GRAND PIANOS — POOL TABLES — INDOOR HOT TUBS/SAUNAS — MURPHY BED</p>
+      </div>
+      <div class="policy-item">
+        <h4>What If I Need to Cancel My Move?</h4>
+        <p>We totally understand that things pop up &amp; plans change so we have a no-hassle cancellation policy. However, if you need to cancel or change your date you need to call us or reply to this email asap to let us know. We will do our absolute best to reschedule you for your date of choice based on availability. Please keep in mind that the date you request to switch to might be a different rate. <strong style="color:#00E24B;">Please give us a minimum of 48 hours if you need to change or cancel your move date.</strong></p>
+      </div>
+      <div class="policy-item">
+        <h4>Insurance</h4>
+        <p><u>We include basic insurance</u> with all of our orders in accordance with the California Public Utility Commission's standard of <strong style="color:#00E24B;">$0.60 per pound</strong> for lost or damaged goods. You may also opt to use your homeowners or renters insurance to cover your items while we are moving them. For additional insurance or a full coverage policy we recommend a third party insurance company. The link below is an example of one that we have had positive experiences with:<br><a href="http://www.movinginsurance.com/index.asp?Aff=12838" target="_blank">http://www.MovingInsurance.com/index.asp?Aff=12838</a></p>
+      </div>
+      <div class="policy-item">
+        <h4>Public Utilities Commission</h4>
+        <p>Please review this <a href="http://www.cpuc.ca.gov/transportation" target="_blank">LINK</a> to familiarize yourself with the regulations of the California Public Utilities Commission that pertain to moving:<br><a href="http://www.cpuc.ca.gov/transportation" target="_blank">http://www.cpuc.ca.gov/transportation</a></p>
+      </div>
+      <div class="policy-item" style="border-bottom:none;">
+        <h4>After the Move Is Done</h4>
+        <p>If you have any questions, comments, or feedback DURING OR AFTER the move please do not hesitate to give us a call at <a href="tel:8008165121">800-816-5121</a> or just reply to this email.</p>
+      </div>
+      
+      <div style="text-align:center; margin-top:40px; padding-top:20px; border-top:1px dashed #333;">
+        <p style="font-size:18px; font-weight:800; color:#00E24B;">Thank you for choosing Pure Moving!</p>
+        <p style="font-size:14px; margin-top:8px;">Have a great move and feel free to call us if you need anything whatsoever.</p>
+      </div>
+    </div> <!-- /policies -->
 
   </div><!-- /body -->
 
   <!-- ══ FOOTER ══ -->
   <div class="footer">
-    <div class="footer-top">
-      <p><strong style="color:#fff;" data-editable="rep_name">Matthew</strong></p>
-      <p data-editable="rep_title">Customer Service Representative</p>
-      <p style="margin-top:8px;">
-        <a href="tel:8008165121">800-816-5121</a> EXT 3
-      </p>
+    <div style="margin-bottom:20px;">
+      <div class="rep-name" data-editable="rep_name">Matthew</div>
+      <div class="rep-title" data-editable="rep_title">Customer Service Representative</div>
+      <div class="rep-phone"><a href="tel:8008165121">800-816-5121</a> &nbsp;•&nbsp; EXT 3</div>
     </div>
-    <div style="text-align:center;">
-      <img
-        src="https://pure-moving.s3.us-west-1.amazonaws.com/images/pure.jpeg"
-        alt="Pure Moving"
-        class="sig-logo">
-      <p style="margin-top:10px; font-size:11px; color:#666;">
-        Residential | Commercial | Long-Distance<br>
-        Licensed &amp; Insured | www.puremovers.com
-      </p>
+    
+    <img src="b.svg" alt="Pure Moving" style="height:30px; margin: 10px 0;">
+    
+    <div class="footer-bottom">
+      Residential | Commercial | Long-Distance<br>
+      Licensed &amp; Insured | <a href="https://www.puremovers.com" style="color:#00E24B; font-weight:700; text-decoration:none;">www.puremovers.com</a>
     </div>
   </div>
 
