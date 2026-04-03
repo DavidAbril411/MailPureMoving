@@ -1,0 +1,21 @@
+[
+  {
+    "customer_name": "Juan García López",
+    "customer_email": "juan.garcia@ejemplo.com",
+    "customer_phone": "(555) 123-4567",
+    "order_number": "PV 000001",
+    "move_date": "15 de Abril, 2026",
+    "arrival_window": "8:00 AM – 12:00 PM",
+    "move_size": "2 Dormitorios | 1,200 SqFt",
+    "total_distance": "45 millas",
+    "pickup_address": "123 Main Street",
+    "pickup_city": "Los Angeles",
+    "pickup_state": "California",
+    "pickup_zip": "90001",
+    "delivery_address": "456 Oak Avenue",
+    "delivery_city": "San Diego",
+    "delivery_state": "California",
+    "delivery_zip": "92101",
+    "additional_notes": "Cliente VIP – Tienen mascotas"
+  }
+]
