@@ -1,0 +1,45 @@
+{
+  "lead_id": "LEAD_001",
+  "customer_name": "Humberto Aguirre",
+  "customer_email": "humberto.aguirre@email.com",
+  "customer_phone": "(333) 333-3333",
+  "order_number": "MG 315645",
+  "move_date": "15 de Abril, 2026",
+  "arrival_window": "9:00 AM - 12:00 PM",
+  "move_size": "1 Dormitorio | 600 SqFt",
+  "total_distance": "0 millas",
+  "pickup_address": "123 Main Street",
+  "pickup_city": "Irwindale",
+  "pickup_state": "California",
+  "pickup_zip": "91702",
+  "delivery_address": "456 Oak Avenue",
+  "delivery_city": "Irwindale",
+  "delivery_state": "California",
+  "delivery_zip": "91702",
+  "additional_notes": "Cliente preferente - No hay escaleras",
+  "representative_name": "Matthew",
+  "representative_title": "Customer Service Representative",
+  "representative_phone": "800-816-5121",
+  "representative_extension": "3",
+  "quote_status": "confirmed",
+  "insurance_type": "basic",
+  "payment_method": "credit_card",
+  "special_items": [
+    {
+      "type": "TV",
+      "size": "65 inch",
+      "notes": "Needs testing after move"
+    },
+    {
+      "type": "Piano",
+      "notes": "Requires specialized team - 48hrs notice given"
+    }
+  ],
+  "access_restrictions": {
+    "parking": "Limited street parking",
+    "building_access": "Need security code",
+    "elevator": "Available"
+  },
+  "created_at": "2026-04-01T10:30:00Z",
+  "updated_at": "2026-04-01T15:45:00Z"
+}
