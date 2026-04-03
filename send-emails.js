@@ -19,40 +19,10 @@ const EmailTemplateGenerator = require('./generate-email.js');
 const fs   = require('fs');
 const path = require('path');
 
-// ─── INLINE IMAGES AS BASE64 ─────────────────────────────────────────────────
-// Los clientes de correo no pueden acceder a rutas relativas locales.
-// Esta función reemplaza src="archivo.ext" por src="data:mime/type;base64,..."
-const MIME_TYPES = {
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.webp': 'image/webp',
-};
-
-function inlineImages(html, templateDir) {
-  return html.replace(/src="([^"]+)"/g, (match, src) => {
-    // Ignorar URLs absolutas y data URIs que ya estén inlineadas
-    if (src.startsWith('http') || src.startsWith('data:')) return match;
-
-    const filePath = path.resolve(templateDir, src);
-    if (!fs.existsSync(filePath)) {
-      console.warn(`⚠️  Imagen no encontrada, se omite: ${filePath}`);
-      return match;
-    }
-
-    const ext  = path.extname(filePath).toLowerCase();
-    const mime = MIME_TYPES[ext] || 'application/octet-stream';
-    const b64  = fs.readFileSync(filePath).toString('base64');
-    return `src="data:${mime};base64,${b64}"`;
-  });
-}
-
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 const API_TOKEN  = process.env.MAILERSEND_API_TOKEN;
-const FROM_EMAIL = process.env.FROM_EMAIL  || 'noreply@abrilcodes.com';
-const FROM_NAME  = process.env.FROM_NAME   || 'Pure Moving';
+const FROM_EMAIL = process.env.FROM_EMAIL    || 'noreply@abrilcodes.com';
+const FROM_NAME  = process.env.FROM_NAME     || 'Pure Moving';
 const SUBJECT    = process.env.EMAIL_SUBJECT || 'Your Move Confirmation – Pure Moving';
 const RECIPIENTS_FILE = process.env.RECIPIENTS_FILE || './recipients.json';
 
@@ -61,13 +31,65 @@ if (!API_TOKEN) {
   process.exit(1);
 }
 
+// ─── MIME TYPES ──────────────────────────────────────────────────────────────
+const MIME_TYPES = {
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif':  'image/gif',
+  '.svg':  'image/svg+xml',
+  '.webp': 'image/webp',
+};
+
+// ─── PREPARE INLINE ATTACHMENTS (CID) ────────────────────────────────────────
+// Las imágenes se envían como adjuntos inline con un Content-ID.
+// El HTML usa src="cid:<id>" en lugar de base64 embebido en el HTML,
+// evitando que Gmail corte el mensaje por superar 102 KB.
+function prepareInlineAttachments(html, templateDir) {
+  const attachments = [];
+  const cidMap = {};
+
+  const processedHtml = html.replace(/src="([^"]+)"/g, (match, src) => {
+    if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('cid:')) return match;
+
+    const filePath = path.resolve(templateDir, src);
+    if (!fs.existsSync(filePath)) {
+      console.warn(`⚠️  Imagen no encontrada, se omite: ${filePath}`);
+      return match;
+    }
+
+    // Reusar el mismo CID si la misma imagen aparece varias veces
+    if (!cidMap[src]) {
+      const ext      = path.extname(filePath).toLowerCase();
+      const mime     = MIME_TYPES[ext] || 'application/octet-stream';
+      const filename = path.basename(filePath);
+      const cid      = `img_${attachments.length}_${filename.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+
+      attachments.push({
+        content:     fs.readFileSync(filePath).toString('base64'),
+        filename,
+        type:        mime,
+        disposition: 'inline',
+        id:          cid,
+      });
+
+      cidMap[src] = cid;
+    }
+
+    return `src="cid:${cidMap[src]}"`;
+  });
+
+  return { html: processedHtml, attachments };
+}
+
 // ─── ENVÍO VIA MAILERSEND REST API ───────────────────────────────────────────
-async function sendEmail({ toEmail, toName, htmlBody }) {
+async function sendEmail({ toEmail, toName, htmlBody, attachments }) {
   const payload = {
-    from: { email: FROM_EMAIL, name: FROM_NAME },
-    to:   [{ email: toEmail, name: toName }],
-    subject: SUBJECT,
-    html: htmlBody,
+    from:        { email: FROM_EMAIL, name: FROM_NAME },
+    to:          [{ email: toEmail, name: toName }],
+    subject:     SUBJECT,
+    html:        htmlBody,
+    attachments,
   };
 
   const res = await fetch('https://api.mailersend.com/v1/email', {
@@ -86,9 +108,8 @@ async function sendEmail({ toEmail, toName, htmlBody }) {
   return { ok: false, status: res.status, detail };
 }
 
-// ─── MAIN ─────────────────────────────────────────────────────────────────────
+// ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
-  // Leer destinatarios
   if (!fs.existsSync(RECIPIENTS_FILE)) {
     console.error(`❌  No se encontró ${RECIPIENTS_FILE}. Crea el archivo con la lista de destinatarios.`);
     process.exit(1);
@@ -97,19 +118,20 @@ async function main() {
   const recipients = JSON.parse(fs.readFileSync(RECIPIENTS_FILE, 'utf-8'));
   console.log(`📬  Enviando a ${recipients.length} destinatario(s)...\n`);
 
-  const generator = new EmailTemplateGenerator();
+  const generator    = new EmailTemplateGenerator();
+  const templateDir  = path.dirname(path.resolve(generator.templatePath));
 
   for (const lead of recipients) {
     try {
       const completeLead = generator.createCompleteLead(lead);
-      const rawHtml = generator.generateClean(completeLead);
-      const templateDir = path.dirname(path.resolve(generator.templatePath));
-      const html = inlineImages(rawHtml, templateDir);
+      const rawHtml      = generator.generateClean(completeLead);
+      const { html, attachments } = prepareInlineAttachments(rawHtml, templateDir);
 
       const result = await sendEmail({
-        toEmail: completeLead.customer_email,
-        toName:  completeLead.customer_name,
-        htmlBody: html,
+        toEmail:     completeLead.customer_email,
+        toName:      completeLead.customer_name,
+        htmlBody:    html,
+        attachments,
       });
 
       if (result.ok) {
@@ -121,7 +143,7 @@ async function main() {
       console.error(`❌  Excepción para ${lead.customer_email || '?'}: ${err.message}`);
     }
 
-    // Pausa breve para no saturar la API (ajusta según tu plan)
+    // Pausa breve para no saturar la API
     await new Promise(r => setTimeout(r, 300));
   }
 
